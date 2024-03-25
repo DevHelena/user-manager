@@ -1,0 +1,10 @@
+table {
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    width: 500px;
+    cursor: pointer;
+} table:hover {
+    background: rgb(44, 44, 44);
+}
