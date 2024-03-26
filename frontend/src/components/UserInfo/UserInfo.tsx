@@ -27,7 +27,6 @@ const UserInfo = ({user}: UserInfoProps) => {
           <td>{user?.id}</td>
         </tr>
       </table>  
-
     </Link>
   )
 }

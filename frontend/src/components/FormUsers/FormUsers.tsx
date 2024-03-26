@@ -8,10 +8,12 @@ import { IUser } from '../../types';
 interface IFormProps {
   title: string,
   button: string,
-  typeReq: string
+  typeReq: string,
+  id: string | undefined,
+  setUser: React.Dispatch<React.SetStateAction<IUser | undefined>> | undefined
 }
 
-const FormUsers = ({title, button, typeReq}: IFormProps) => {
+const FormUsers = ({title, button, typeReq, id, setUser}: IFormProps) => {
   const { setUsers } = useContext<UsersContextType | any >(UsersContext);
 
   const [username, setUsername] = useState('');
@@ -20,25 +22,23 @@ const FormUsers = ({title, button, typeReq}: IFormProps) => {
   const handleSubmit = async (event : React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
+      const url = typeReq === 'post' ? 'http://localhost:3000/users' : `http://localhost:3000/users/${id}`;
+      const requestData =  { username, password };
       
-      const response = await axios.post('http://localhost:3000/users', { username, password });
+      const response = await (typeReq === 'post' ? axios.post(url, requestData) : axios.put(url, requestData));
+  
+      setUsers((prevUsers : IUser[]) => {
+        return [...prevUsers, { username, password, id: response.data.id }];
+      });
 
-      setUsers((prevUsers : IUser[]) => [
-        ...prevUsers,
-        {
-          username,
-          password,
-          id: response.data.id
-        }
-      ])
-
+      setUser && setUser({ username, password, id: response.data.id });
+  
       setUsername('');
       setPassword('');
-
     } catch (error) {
       console.error('Erro ao fazer requisição:', error);
     }
-  };
+  }
 
   return (
     <div>

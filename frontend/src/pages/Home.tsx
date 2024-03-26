@@ -5,7 +5,7 @@ const Home = () => {
 
   return (
     <div className="container">
-      <FormUsers title="Adcionar Usuário" button="Adcionar" typeReq="post"/>
+      <FormUsers title="Adcionar Usuário" button="Adcionar" typeReq="post" id={undefined} setUser={undefined}/>
       <ViewUsers/>
     </div>
   )
